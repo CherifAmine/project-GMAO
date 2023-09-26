@@ -1,0 +1,57 @@
+<html>
+<head>
+    <title>Identification</title>
+    <meta charset="utf-8">
+
+    <!-- code css -->
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/myStyle.css') }}" >
+
+    <!-- Custom styles for this template -->
+    <link href="{{ url_for('static', filename='css/sign.css') }}" rel="stylesheet">
+
+</head>
+
+<body> 
+
+    <div class="login-box">
+        <img src="{{ url_for('static',filename='image/utilisateur.png')}}" class="avatar" >
+        <center><font size="5px"><b> créer un compte </b></font></center>
+
+        <center><font color="red"><table><tr><td bgcolor="red">{{error}}</td></tr></table>  <br></font></center>
+
+        <form method="POST" action="">
+            <br>
+            <p><b><font color="red">*</font></sup>Tu est :</b>
+            <input type="number" name="Login" placeholder="Saisissez votre Login"></p>
+            <p><b><font color="red">*</font></sup>Login</b>
+            <input type="number" name="Login" placeholder="Saisissez votre Login"></p>
+            <p><b><font color="red">*</font></sup>Mot de Passe</b>
+            <input type="password" name="Mdp" placeholder="Entrez votre mot de passe"></p>
+
+            <p><b><font color="red">*</font></sup>Nom</b>
+            <input type="text" name="Mdp" placeholder="Entrez votre mot de passe"></p>
+
+            <p><b><font color="red">*</font></sup>Prenom</b>
+            <input type="text" name="Mdp" placeholder="Entrez votre mot de passe"></p>
+
+            <p><b><font color="red">*</font></sup>Email</b>
+            <input type="text" name="Mdp" placeholder="Entrez votre mot de passe"></p>
+
+            <p><b><font color="red">*</font></sup>Num tel</b>
+            <input type="text" name="Mdp" placeholder="Entrez votre mot de passe"></p>
+
+            <p><b><font color="red">*</font></sup>code</b>
+            <input type="password" name="Mdp" placeholder="Entrez votre mot de passe"></p>
+
+            <input type="submit" name="submit" value="Connexion">
+            <a href="">Informations de compte oubliées ?</a> <br>
+            <a href="">créer un compte</a>  
+        </form>
+        
+    </div>
+    
+
+</body>
+
+</html>

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head> 
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+
+
+
+  <title>Gestion recoit intervention</title>
+
+<!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" />
+  <!-- Google Fonts Roboto -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <!-- MDB -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/mdb.min.css') }}" />
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw=="
+    crossorigin="anonymous"></script>
+
+
+   <!-- Bootstrap CSS -->
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+</head>
+
+<body>
+  <!--Main Navigation-->
+  <header>
+    <!-- Sidebar -->
+    <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
+      <div class="position-sticky">
+        <div class="list-group list-group-flush mx-9 mt-4">
+          <a href="#" class="list-group-item list-group-item-action py-2 ripple" aria-current="true">
+           <span>  <img src="{{ url_for('static',filename='image/cherif.jpg')}}" class="rounded-circle" height="50"
+                alt="" loading="lazy" />
+              <font size="2">{{username}}</font></span>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action py-2 ripple active">
+            <span>Mon Profil </span>
+          </a>
+  
+          <a href="{{url_for('page_add_planification_maintenance')}}"  class="list-group-item list-group-item-action py-2 ripple"> <img src="{{ url_for('static',filename='image/maintenance.png')}}" height="15" alt="" loading="lazy" /><span>Planification Maintenance</span></a>
+
+
+          <a href="{{url_for('page_liste_recoit_intervention')}}"  class="list-group-item list-group-item-action py-2 ripple"> <img src="{{ url_for('static',filename='image/maintenance.png')}}" height="15" alt="" loading="lazy" /><span>Liste d'intervention</span></a>
+
+  
+        </div>
+      </div>
+    </nav>
+    <!-- Sidebar -->
+
+    <!-- Navbar -->
+    <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+      <!-- Container wrapper -->
+      <div class="container-fluid">
+        <!-- Toggle button -->
+        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#sidebarMenu"
+          aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="#">
+          <img src="{{ url_for('static',filename='image/maintenance.png')}}" height="25" alt="" loading="lazy" />
+          GMAO
+    
+        </a>
+ 
+
+        <!-- Right links -->
+        <ul class="navbar-nav ms-auto d-flex flex-row">
+          <!-- Notification dropdown -->
+         <li class="nav-item dropdown">
+            <a class="nav-link me-3 me-lg-0 dropdown-toggle hidden-arrow" href="#" id="navbarDropdownMenuLink"
+              role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-bell"></i>
+              <span class="badge rounded-pill badge-notification bg-danger">{{Data_Nb_Notif_Intervention}}</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+              {% for row in Interventions %}
+           
+                           <li><a class="dropdown-item" href="/page_liste_recoit_intervention">
+                <img src="{{ url_for('static',filename='image/notif.GIF')}}" class="rounded-circle" height="30"
+                alt="" loading="lazy" />
+                            <b><i>Inervension</i>: [Machine]</b>{{row.1}}, <b>[Secteur]</b>{{row.2}},  <b>[Date d'intervention souhaitée] {{row.5}} </b></sup></a></li>
+
+              {% endfor  %}
+            </ul>
+          </li>
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         
+          <!-- Avatar -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle hidden-arrow d-flex align-items-center" href="#"
+              id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+              
+              <img src="{{ url_for('static',filename='image/cherif.jpg')}}" class="rounded-circle" height="30"
+                alt="" loading="lazy" />
+              {{username}}
+              
+
+
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+              <li><a class="dropdown-item" href="#">My profile</a></li>
+              <li><a class="dropdown-item" href="/dropsession">Logout</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <!-- Container wrapper -->
+    </nav>
+    <!-- Navbar -->
+  </header>
+
+  <!--Main layout-->
+  <main bgcolor="#000000" style="margin-top: 58px">
+    <div class="container pt-4">
+    
+   <!--Section: Statistics with subtitles-->
+      <section>
+        <div class="row">
+          <div class="col-xl-6 col-md-12 mb-4">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex justify-content-between p-md-1">
+                  <div class="d-flex flex-row">
+                    <div class="align-self-center">
+                      <h2 class="h1 mb-0 me-4">{{Data_Nb_Planificationn}}</h2>
+                    </div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <center>
+                    <div>
+                      <h4>Votre planification <br> de maintenance</h4>
+                      <p class="mb-0"></p>
+                    </div>
+
+                    </center>
+                  </div>
+                  <div class="align-self-center">
+                   <img src="{{ url_for('static',filename='image/maintenance.png')}}" class="rounded-circle" height="30"
+                alt="" loading="lazy" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-6 col-md-12 mb-4">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex justify-content-between p-md-1">
+                  <div class="d-flex flex-row">
+                    <div class="align-self-center">
+                      <h2 class="h1 mb-0 me-4">{{Data_Nb_Notif_Intervention}}</h2>
+                    </div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <center>
+                    <div>
+                      <h4>Votre demande de <br>  maintenance</h4>
+                      <p class="mb-0"></p>
+                    </div>
+                    </center>
+                  </div>
+                  <div class="align-self-center">
+                   <img src="{{ url_for('static',filename='image/maintenance.png')}}" class="rounded-circle" height="30"
+                alt="" loading="lazy" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+
+
+    {% with messages = get_flashed_messages() %}
+            {% if messages %}
+              {% for message in messages %}
+              <div class="alert alert-success">
+                {{ message }}
+              </div>
+              {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+<hr>
+       <h3> Les interventions <img src="{{ url_for('static',filename='image/img.GIF')}}" height="60" alt="" loading="lazy" /></h3><hr>
+      <section class="mb-4">
+        <div class="card">
+          <div class="card-header text-center py-3">
+            <h5 class="mb-0 text-center">
+              <strong></strong>
+            </h5>
+          </div>
+
+
+      {% block content %}      
+
+    
+     <form action="{{url_for('technicien_cest_partie')}}" method="POST" enctype="multipart/form-data">
+
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-hover text-nowrap">
+                <thead>
+                  <tr>
+                    <th>Nom de Machine</th>
+                    <th>Secteur</th>
+                    <th>Description</th> 
+                    <th>Etat Urgent?</th>             
+                    <th>Date d'intervention Souhaitée</th>
+                  </tr>
+                </thead>
+                <tbody>
+
+  {% for row in Interventions %}
+            <tr>
+              <input type="hidden" value="{{row.0}}" name="id_notif">
+              <td>{{row.1}}<input type="hidden" value="{{row.1}}" name="machine"></td>
+              <td>{{row.2}}<input type="hidden" value="{{row.2}}" name="secteur"></td>
+              <td>{{row.3}}<input type="hidden" value="{{row.4}}" name="description"></td>
+              <td>{{row.4}}<input type="hidden" value="{{row.5}}" name="etat_u"></td>
+               
+              <td>{{row.5}}<input type="hidden" value="{{row.5}}" name="date_interv"></td>
+           
+
+        </div>
+      </td>
+
+              <td>
+
+                      <div class="form-group">
+
+          <button class="btn btn-primary" type="submit">C'est parti !</button>
+
+        </div>
+
+    
+             </td>
+           </tr>
+                </tbody>
+      </form>
+        {% endfor  %}
+
+    </table>
+  </div>
+
+
+
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+<hr>
+{% endblock content %}
+
+</main>
+  <!--Main layout-->
+  <!-- MDB -->
+  <script type="text/javascript" src="{{url_for('static', filename='js/mdb.min.js') }}"></script>
+  <!-- Custom scripts -->
+  <script type="text/javascript" src="{{url_for('static', filename='js/admin.js') }}"></script>
+
+</body>
+
+</html>
